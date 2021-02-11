@@ -1,0 +1,10 @@
+name: SimpleHub
+version: ${project.version}
+main: lol.hyper.simplehub.SimpleHubBukkit
+api-version: 1.16
+author: hyperdefined
+commands:
+  hub:
+    description: Teleport back to the hub.
+  reloadhub:
+    description: Reload SimpleHub config.

@@ -1,0 +1,4 @@
+name: SimpleHub
+version: ${project.version}
+main: lol.hyper.simplehub.SimpleHubBungeeCord
+author: hyperdefined
