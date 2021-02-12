@@ -41,7 +41,7 @@ public final class SimpleHubBukkit extends JavaPlugin {
         HubCommand hubCommand = new HubCommand(this);
         ReloadCommand reloadCommand = new ReloadCommand(this);
         this.getCommand("hub").setExecutor(hubCommand);
-        this.getCommand("reloadhub").setExecutor(hubCommand);
+        this.getCommand("reloadhub").setExecutor(reloadCommand);
         if (!configFile.exists()) {
             this.saveResource("config.yml", true);
             logger.info("Copying default config!");
