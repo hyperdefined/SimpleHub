@@ -3,4 +3,5 @@
 
 The easiest /hub command ever. Runs on either Spigot/Paper servers or on Bungee/Waterfall.
 
-[Documentation and more info](https://hyper.lol/minecraft-plugins/simplehub/).
+- [Documentation and more info](https://hyper.lol/minecraft-plugins/simplehub/).
+- [SpigotMC Page](https://www.spigotmc.org/resources/simplehub.88930/).
