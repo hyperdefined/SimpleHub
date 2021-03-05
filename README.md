@@ -3,5 +3,11 @@
 
 The easiest /hub command ever. Runs on either Spigot/Paper servers or on Bungee/Waterfall.
 
-- [Documentation and more info](https://hyper.lol/minecraft-plugins/simplehub/).
-- [SpigotMC Page](https://www.spigotmc.org/resources/simplehub.88930/).
+## Features
+* Allow players to go back to your hub using `/hub`.
+* Set a wait time to teleport. Player uses command, waits x seconds, then teleports.
+* Optional permission node to use `/hub`.
+* Works on Spigot/Paper or Bungee/Waterfall.
+* Reload the config using `/reloadhub`.
+
+- [Documentation](https://github.com/hyperdefined/SimpleHub/wiki).
