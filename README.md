@@ -8,7 +8,6 @@ The easiest /hub command ever. Runs on either Spigot/Paper servers or on Bungee/
 * Set a wait time to teleport. Player uses command, waits x seconds, then teleports.
 * Optional permission node to use `/hub`.
 * Works on Spigot/Paper or Bungee/Waterfall.
-* Reload the config using `/reloadhub`.
 
 ## Documentation
 Visit the [wiki](https://github.com/hyperdefined/SimpleHub/wiki) for help.
