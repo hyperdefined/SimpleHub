@@ -33,8 +33,8 @@ public final class SimpleHubBukkit extends JavaPlugin {
 
     public final File configFile = new File(this.getDataFolder(), "config.yml");
     public final Logger logger = this.getLogger();
-    public FileConfiguration config;
     final int CONFIG_VERSION = 1;
+    public FileConfiguration config;
 
     @Override
     public void onEnable() {

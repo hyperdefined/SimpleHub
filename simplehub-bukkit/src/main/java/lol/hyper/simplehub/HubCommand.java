@@ -48,7 +48,11 @@ public class HubCommand implements CommandExecutor {
         }
         sender.sendMessage(simpleHubBukkit.convertConfigMessage());
         if (simpleHubBukkit.config.getBoolean("wait-to-teleport")) {
-            Bukkit.getScheduler().runTaskLater(simpleHubBukkit, () -> simpleHubBukkit.sendPlayerToServer((Player) sender), 20L * simpleHubBukkit.config.getInt("wait-time"));
+            Bukkit.getScheduler()
+                    .runTaskLater(
+                            simpleHubBukkit,
+                            () -> simpleHubBukkit.sendPlayerToServer((Player) sender),
+                            20L * simpleHubBukkit.config.getInt("wait-time"));
         } else {
             simpleHubBukkit.sendPlayerToServer((Player) sender);
         }

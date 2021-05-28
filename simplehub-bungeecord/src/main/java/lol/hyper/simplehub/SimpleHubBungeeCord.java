@@ -34,8 +34,8 @@ public final class SimpleHubBungeeCord extends Plugin {
 
     public final File configFile = new File(this.getDataFolder(), "config.yml");
     public final Logger logger = this.getLogger();
-    public Configuration config;
     final int CONFIG_VERSION = 1;
+    public Configuration config;
 
     @Override
     public void onEnable() {

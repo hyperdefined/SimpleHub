@@ -51,14 +51,23 @@ public class HubCommand extends Command {
         }
         sender.sendMessage(new TextComponent(ChatColor.RED + simpleHubBungeeCord.convertConfigMessage()));
         if (simpleHubBungeeCord.config.getBoolean("wait-to-teleport")) {
-            simpleHubBungeeCord.getProxy().getScheduler().schedule(simpleHubBungeeCord, () -> {
-                    ProxiedPlayer player = (ProxiedPlayer) sender;
-            ServerInfo target = ProxyServer.getInstance().getServerInfo(simpleHubBungeeCord.config.getString("hub-server"));
-            player.connect(target);
-            }, simpleHubBungeeCord.config.getInt("wait-time"), TimeUnit.SECONDS);
+            simpleHubBungeeCord
+                    .getProxy()
+                    .getScheduler()
+                    .schedule(
+                            simpleHubBungeeCord,
+                            () -> {
+                                ProxiedPlayer player = (ProxiedPlayer) sender;
+                                ServerInfo target = ProxyServer.getInstance()
+                                        .getServerInfo(simpleHubBungeeCord.config.getString("hub-server"));
+                                player.connect(target);
+                            },
+                            simpleHubBungeeCord.config.getInt("wait-time"),
+                            TimeUnit.SECONDS);
         } else {
             ProxiedPlayer player = (ProxiedPlayer) sender;
-            ServerInfo target = ProxyServer.getInstance().getServerInfo(simpleHubBungeeCord.config.getString("hub-server"));
+            ServerInfo target =
+                    ProxyServer.getInstance().getServerInfo(simpleHubBungeeCord.config.getString("hub-server"));
             player.connect(target);
         }
     }
