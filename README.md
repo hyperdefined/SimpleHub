@@ -11,7 +11,7 @@ The easiest /hub command ever. Runs on either Spigot/Paper servers or on Bungee/
 * Works on Spigot/Paper or Bungee/Waterfall.
 
 ## Documentation
-Visit the [wiki](https://github.com/hyperdefined/SimpleHub/wiki) for help.
+Visit the [wiki](https://docs.hyper.lol/simplehub) for help.
 
 ## License
 This plugin is released under GNU General Public License v3. See [LICENSE](https://github.com/hyperdefined/SimpleHub/blob/master/LICENSE).
