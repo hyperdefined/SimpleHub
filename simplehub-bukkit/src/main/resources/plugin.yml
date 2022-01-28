@@ -8,3 +8,7 @@ commands:
     description: Teleport back to the hub.
   reloadhub:
     description: Reload SimpleHub config.
+permissions:
+  simplehub.reload:
+    default: op
+    description: Allows the usage of /reloadhub
