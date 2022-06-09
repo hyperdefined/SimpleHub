@@ -1,7 +1,7 @@
 name: SimpleHub
 version: ${project.version}
 main: lol.hyper.simplehub.SimpleHubBukkit
-api-version: 1.16
+api-version: 1.13
 author: hyperdefined
 commands:
   hub:

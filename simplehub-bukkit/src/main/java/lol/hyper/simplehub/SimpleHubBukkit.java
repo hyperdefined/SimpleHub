@@ -17,31 +17,45 @@
 
 package lol.hyper.simplehub;
 
-import com.google.common.io.ByteArrayDataOutput;
-import com.google.common.io.ByteStreams;
+import lol.hyper.githubreleaseapi.GitHubRelease;
+import lol.hyper.githubreleaseapi.GitHubReleaseAPI;
+import lol.hyper.simplehub.commands.HubCommand;
+import lol.hyper.simplehub.commands.ReloadCommand;
+import net.kyori.adventure.platform.bukkit.BukkitAudiences;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
+import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bstats.bukkit.Metrics;
-import org.bukkit.ChatColor;
+import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.logging.Logger;
 
 public final class SimpleHubBukkit extends JavaPlugin {
 
     public final File configFile = new File(this.getDataFolder(), "config.yml");
     public final Logger logger = this.getLogger();
-    final int CONFIG_VERSION = 1;
+    final int CONFIG_VERSION = 2;
     public FileConfiguration config;
+    private BukkitAudiences adventure;
+    public final MiniMessage miniMessage = MiniMessage.miniMessage();
+
+    public HubCommand hubCommand;
+    public ReloadCommand reloadCommand;
 
     @Override
     public void onEnable() {
-        HubCommand hubCommand = new HubCommand(this);
-        ReloadCommand reloadCommand = new ReloadCommand(this);
+        this.adventure = BukkitAudiences.create(this);
+        hubCommand = new HubCommand(this);
+        reloadCommand = new ReloadCommand(this);
+
         this.getCommand("hub").setExecutor(hubCommand);
         this.getCommand("reloadhub").setExecutor(reloadCommand);
+
         if (!configFile.exists()) {
             this.saveResource("config.yml", true);
             logger.info("Copying default config!");
@@ -49,7 +63,8 @@ public final class SimpleHubBukkit extends JavaPlugin {
         loadConfig();
         this.getServer().getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
 
-        Metrics metrics = new Metrics(this, 10298);
+        new Metrics(this, 10298);
+        Bukkit.getScheduler().runTaskAsynchronously(this, this::checkForUpdates);
     }
 
     public void loadConfig() {
@@ -59,18 +74,45 @@ public final class SimpleHubBukkit extends JavaPlugin {
         }
     }
 
-    public void sendPlayerToServer(Player player) {
-        ByteArrayDataOutput out = ByteStreams.newDataOutput();
-        out.writeUTF("Connect");
-        out.writeUTF(config.getString("hub-server"));
-        player.sendPluginMessage(this, "BungeeCord", out.toByteArray());
+    public void checkForUpdates() {
+        GitHubReleaseAPI api;
+        try {
+            api = new GitHubReleaseAPI("SimpleHub", "hyperdefined");
+        } catch (IOException e) {
+            logger.warning("Unable to check updates!");
+            e.printStackTrace();
+            return;
+        }
+        GitHubRelease current = api.getReleaseByTag(this.getDescription().getVersion());
+        GitHubRelease latest = api.getLatestVersion();
+        if (current == null) {
+            logger.warning("You are running a version that does not exist on GitHub. If you are in a dev environment, you can ignore this. Otherwise, this is a bug!");
+            return;
+        }
+        int buildsBehind = api.getBuildsBehind(current);
+        if (buildsBehind == 0) {
+            logger.info("You are running the latest version.");
+        } else {
+            logger.warning("A new version is available (" + latest.getTagVersion() + ")! You are running version " + current.getTagVersion() + ". You are " + buildsBehind + " version(s) behind.");
+        }
     }
 
-    public String convertConfigMessage() {
-        String message = config.getString("send-message");
+    public Component getMessage(String path) {
+        String message = config.getString(path);
+        if (message == null) {
+            logger.warning(path + " is not a valid message!");
+            return Component.text("Invalid path! " + path).color(NamedTextColor.RED);
+        }
         if (message.contains("{{SECONDS}}")) {
             message = message.replace("{{SECONDS}}", String.valueOf(config.getInt("wait-time")));
         }
-        return ChatColor.translateAlternateColorCodes('&', message);
+        return miniMessage.deserialize(message);
+    }
+
+    public BukkitAudiences getAdventure() {
+        if(this.adventure == null) {
+            throw new IllegalStateException("Tried to access Adventure when the plugin was disabled!");
+        }
+        return this.adventure;
     }
 }

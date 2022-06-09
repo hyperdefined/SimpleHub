@@ -2,16 +2,11 @@
 hub-server: "hub"
 
 # Should we wait x amount of seconds before teleporting?
-wait-to-teleport: true
+# Set to 0 to disable.
 wait-time: 5
 
 # Send this message when they use /hub. Leave it blank for no message.
-send-message: "&cTeleporting to the hub in {{SECONDS}} seconds!"
-
-# Set to true if you want the player to require permissions to use /hub.
-# The permission node can be anything, just make sure to give out that permission that is listed below.
-use-permission-node: false
-permission-node: "simplehub.hub"
+send-message: "<red>Teleporting to the hub in {{SECONDS}} seconds!</red>"
 
 # Do not touch please :)
-config-version: 1
+config-version: 2
